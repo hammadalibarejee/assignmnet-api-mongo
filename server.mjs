@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
-import { json } from "stream/consumers";
+
 mongoose.connect("mongodb+srv://hammadali:hammad123@cluster0.nturn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 
 const User = mongoose.model("User",{
