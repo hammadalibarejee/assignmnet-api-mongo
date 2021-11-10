@@ -3,7 +3,7 @@ import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import { json } from "stream/consumers";
-mongoose.connect("mongodb+srv://hammadali:hammad123@cluster0.gttlm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://hammadali:hammad123@cluster0.nturn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 
 const User = mongoose.model("User",{
     name:String,
@@ -15,8 +15,9 @@ const app=express();
 const port= process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express(json));
+app.use(express.json());
 app.use(morgan("short"))
+
 app.get("/",(req,res)=>{
     res.send("Hello World")
 });
@@ -56,13 +57,16 @@ app.post("/user",(req,res)=>{
         newUser.save().then(()=>{
             console.log("user created");
             res.send("User Created")
-        });
+        }).catch((e)=>{
+            console.log(e);
+        })
     }
 });
 app.put("/user/:id",(req,res)=>{
     let updateObj={}
 
     if (req.body.name){
+        
         updateObj.name=req.body.name
     }
     if (req.body.email){
