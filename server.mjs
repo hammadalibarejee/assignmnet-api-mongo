@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan";
 import cors from "cors";
 import mongoose from "mongoose";
 import { json } from "stream/consumers";
@@ -10,11 +11,12 @@ const User = mongoose.model("User",{
     address:String
 });
 const app=express();
+
 const port= process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express(json));
-
+app.use(morgan("short"))
 app.get("/",(req,res)=>{
     res.send("Hello World")
 });
@@ -51,7 +53,7 @@ app.post("/user",(req,res)=>{
             email:req.body.email,
             address:req.body.address
         });
-        newUser.savae().then(()=>{
+        newUser.save().then(()=>{
             console.log("user created");
             res.send("User Created")
         });
@@ -83,5 +85,5 @@ app.put("/user/:id",(req,res)=>{
 })
 
 app.listen(port,()=>{
-    console.log(`Example app listening at https://localhost:${port}`);
+    console.log(`Example app listening at http://localhost:${port}`);
 })
