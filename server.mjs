@@ -87,6 +87,17 @@ app.put("/user/:id",(req,res)=>{
 
 
 })
+app.delete('/user/:id', (req, res) => {
+
+  User.findByIdAndRemove(req.params.id, (err, data) => {
+    if (!err) {
+      res.send("user deleted")
+    } else {
+      res.status(500).send("error happened")
+    }
+  })
+})
+
 
 app.listen(port,()=>{
     console.log(`Example app listening at http://localhost:${port}`);
